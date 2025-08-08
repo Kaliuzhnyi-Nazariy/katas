@@ -57,44 +57,28 @@ function ipsBetweenToCheck(start, end, result) {
   let res = 0;
   const splittedIp = start.split(".");
   const splittedSecondIp = end.split(".");
-  const whereDif = [];
 
-  console.log("==============================");
-  console.log(splittedIp);
-  console.log(splittedSecondIp);
-  console.log(
-    splittedSecondIp.map((num) => {
-      for (let i = 0; i < splittedIp.length; i++) {
-        console.log("num: ", num);
-        console.log("splittedIp[i]: ", splittedIp[i]);
-        return num !== splittedIp[i];
+  console.log("------------------------------------");
+
+  for (let i = 0; i < splittedIp.length; i++) {
+    if (
+      splittedSecondIp[i] > splittedIp[i] ||
+      splittedSecondIp[i] < splittedIp[i]
+    ) {
+      if (i == 3) {
+        res += Math.abs(splittedSecondIp[i] - splittedIp[i]);
+      } else if (Math.abs(splittedSecondIp[i] - splittedIp[i]) >= 1) {
+        console.log("else if");
       }
-    })
-  );
+    }
 
-  //   for (let i = 0; i < splittedIp.length; i++) {
-  //     if (splittedIp[i] > splittedSecondIp[i]) {
-  //       console.log("start higher: ", splittedSecondIp[i] - splittedIp[i] + 255);
+    console.log(Math.abs(splittedSecondIp[i] - splittedIp[i]));
+  }
 
-  //       if (i != 0) {
-  //         whereDif.push(i);
-  //       }
+  console.log("==================");
 
-  //       res += splittedSecondIp[i] - splittedIp[i] + 255;
-  //     } else if (splittedIp[i] < splittedSecondIp[i]) {
-  //       console.log("end higher: ", splittedSecondIp[i] - splittedIp[i]);
-  //       if (i != 0) {
-  //         whereDif.push(i);
-  //       }
-  //       res += splittedSecondIp[i] - splittedIp[i];
-  //     } else {
-  //       console.log("equality");
-  //     }
-  //   }
+  console.log("res: ", res);
 
-  //   console.log("whereDif: ", whereDif);
-
-  //   console.log("res: ", res);
   console.log("result I should receive: ", result);
   return res;
 }
@@ -111,3 +95,5 @@ ipsBetweenToCheck("170.0.0.0", "170.1.0.0", 65536);
 // ipsBetweenToCheck("180.0.0.0", "181.0.0.0", 16777216);
 // ipsBetweenToCheck("1.2.3.4", "5.6.7.8", 67372036);
 // ipsBetweenToCheck("0.0.0.0", "255.255.255.255", 2 ** 32 - 1);
+
+// If [i] > [i + 1] && [i] !>= 4 then second[i] - 1 and splitted[i + 1] 255 - splitted[i + 1]

@@ -20,143 +20,116 @@
 // // numTiles(15n, 5n);
 // // numTiles(16n, 16n);
 
-// function numTilesDev(width, height, result) {
-//   console.log("");
-//   console.log("--------------------------------");
-//   let limit = false;
-//   let needCoverSquare = width * height;
-//   let res = 0;
-//   // const lowerVal = width > height ? height : width;
-//   const lowerVal = width == height ? width : width > height ? height : width;
-//   let maxTileSize =
-//     lowerVal % 2 === 0 || lowerVal === 1 ? lowerVal : lowerVal - 1;
-
-//   console.log(lowerVal);
-
-//   console.log({ width, height, result });
-//   console.log({ maxTileSize });
-
-//   const higherVal = width == height ? width : width > height ? width : height;
-
-//   // do {
-//   //   if (needCoverSquare >= maxTileSize ** 2) {
-//   //     needCoverSquare -= maxTileSize ** 2;
-//   //     if (height - maxTileSize * res < height) {
-//   //       limit = true;
-//   //       console.log({ limit });
-//   //     }
-//   //     res++;
-//   //   } else if (needCoverSquare < maxTileSize ** 2) {
-//   //     if (maxTileSize - 2 == 0) {
-//   //       maxTileSize = 1;
-//   //     } else {
-//   //       maxTileSize -= 2;
-//   //     }
-//   //   }
-//   // } while (needCoverSquare > 0);
-//   do {
-//     console.log("");
-//     console.log({ needCoverSquare });
-//     console.log("check for limit", maxTileSize * (res + 1));
-
-//     if (maxTileSize * (res + 1) > width) {
-//       limit = true;
-//       if (maxTileSize - 2 <= 0) {
-//         maxTileSize = 1;
-//       } else {
-//         maxTileSize -= 2;
-//       }
-//     } else {
-//       limit = false;
-//     }
-
-//     if (!limit && needCoverSquare >= maxTileSize ** 2) {
-//       needCoverSquare -= maxTileSize ** 2;
-//       res++;
-//     }
-//     // else if (limit || needCoverSquare < maxTileSize ** 2) {
-//     //   if (maxTileSize - 2 <= 0) {
-//     //     maxTileSize = 1;
-//     //   } else {
-//     //     maxTileSize -= 2;
-//     //   }
-//     // }
-//   } while (needCoverSquare > 0);
-
-//   //   console.log("--------------------------------");
-//   //   const res = 0;
-//   //   const res = (Number(width) % Number(width)) + 1;
-//   //   console.log({ width });
-//   //   //   console.log(Number(width));
-//   //   console.log({ height });
-//   console.log("==============================");
-//   console.log("result I should have: ", result);
-//   console.log({ res });
-//   console.log("Is correct: ", result === res);
-//   return 0n;
-// }
-
 function numTilesDev(width, height, result) {
-  console.log("");
   console.log("--------------------------------");
-  let limit = false;
-  let needCoverSquare = width * height;
   let res = 0;
-  // const lowerVal = width > height ? height : width;
-  const lowerVal = width == height ? width : width > height ? height : width;
+  // const res = (height % width) + 1;
+  const needToCover = width * height;
   let maxTileSize =
-    lowerVal % 2 === 0 || lowerVal === 1 ? lowerVal : lowerVal - 1;
+    width == height
+      ? width
+      : width > height
+      ? height % 2 == 0
+        ? height
+        : height - 1
+      : width % 2 == 0
+      ? width
+      : width - 1;
 
-  console.log(lowerVal);
+  console.log(needToCover);
+  console.log(maxTileSize);
 
-  console.log({ width, height, result });
-  console.log({ maxTileSize });
+  // let widthToCalculate = width;
+  // let heightToCalculate = height;
 
-  const higherVal = width == height ? width : width > height ? width : height;
-  let widthLeft = width;
+  // if (
+  //   widthToCalculate - maxTileSize >= 0 &&
+  //   heightToCalculate - maxTileSize >= 0
+  // ) {
+  //   widthToCalculate -= maxTileSize;
+  //   console.log({ widthToCalculate });
+  //   // maxTileSize -=
+  // }
 
-  // do {
-  //   if (needCoverSquare >= maxTileSize ** 2) {
-  //     needCoverSquare -= maxTileSize ** 2;
-  //     if (height - maxTileSize * res < height) {
-  //       limit = true;
-  //       console.log({ limit });
-  //     }
-  //     res++;
-  //   } else if (needCoverSquare < maxTileSize ** 2) {
-  //     if (maxTileSize - 2 == 0) {
-  //       maxTileSize = 1;
-  //     } else {
-  //       maxTileSize -= 2;
-  //     }
-  //   }
-  // } while (needCoverSquare > 0);
-  while (needCoverSquare > 0) {
-    widthTaken = 0;
-    if (widthTaken + 1 > width) {
-      limit = true;
-      if (maxTileSize - 2 <= 0) {
-        maxTileSize = 1;
-      } else {
-        maxTileSize -= 2;
+  const sizes = [];
+
+  for (let i = 1; i < width; i++) {
+    if (width - maxTileSize * i < 0) {
+      if (height - maxTileSize >= 0) {
+        console.log("width left: ", width - maxTileSize * i);
+        console.log("i: ", i - 1);
+        sizes.push(i - 1);
+        break;
       }
-    } else {
-      limit = false;
-    }
-
-    if (!limit && needCoverSquare >= maxTileSize ** 2) {
-      needCoverSquare -= maxTileSize ** 2;
-      console.log({ maxTileSize, res, needCoverSquare, limit });
-      widthTaken = maxTileSize * res;
-      res++;
-    } else if (limit && maxTileSize <= 1) {
-      break; // can't go smaller, no more moves
+    } else if (width - maxTileSize * i == 0) {
+      sizes.push(i);
+      break;
     }
   }
+  console.log({ sizes });
+
+  // const tileSize =
+
+  // for (let i = 0; i < height; i++) {
+  //   let row = "";
+  //   for (let j = 0; j < width; j++) {
+  //     // console.log(res);
+
+  //     if (i < heightToCalculate && j < widthToCalculate) {
+  //       row += "#";
+  //       res++;
+  //     } else {
+  //       row += ".";
+  //     }
+  //   }
+  //   console.log(row);
+  // }
+  // let addedTiles = 0;
+
+  // for (let y = 0; y < height; y++) {
+  //   let row = "";
+  //   for (let x = 0; x < width; x++) {
+  //     if (x < maxTileSize && y < maxTileSize) {
+  //       row += "*";
+  //     } else {
+  //       row += ".";
+  //     }
+  //   }
+  //   // console.log("width:", width - maxTileSize);
+  //   // console.log("height: ", height - maxTileSize);
+  //   if (
+  //     width - maxTileSize >= 0 &&
+  //     width - maxTileSize >= widthToCalculate &&
+  //     height - maxTileSize >= 0
+  //   ) {
+  //     const check = row.split("").findIndex((p) => p == ".");
+  //     // console.log({ check });
+  //     if (check >= 0) {
+  //       // console.log(row.slice(check, check + maxTileSize));
+  //       // row.split("").splice(check, maxTileSize, "#");
+  //       // console.log(row.split("").splice(0, maxTileSize, "#").join(""));
+  //       const chars = row.split("");
+  //       chars.splice(check, maxTileSize, ..."#".repeat(maxTileSize));
+  //       row = chars.join("");
+  //     }
+  //   }
+  //   console.log(row);
+  //   // console.log(`Added tile at: (${x}, ${y})`);
+  // }
+  // console.log({ addedTiles });
+
+  // for (let i = 0; i < height; i++) {
+  //   let row = "";
+  //   for (let j = 0; j < width; j++) {
+  //     row += "#";
+  //   }
+  //   console.log(row);
+  // }
+  //   console.log(Number(width));
   console.log("==============================");
-  console.log("result I should have: ", result);
   console.log({ res });
-  console.log("Is correct: ", result === res);
+  console.log("what I should receive: ", result);
+  console.log("is correct: ", result == res);
   return 0n;
 }
 
@@ -164,8 +137,8 @@ function numTilesDev(width, height, result) {
 // numTilesDev(2, 1, 2);
 // numTilesDev(2, 2, 1);
 // numTilesDev(3, 2, 3);
-// numTilesDev(8, 4, 2);
-// numTilesDev(4, 8, 2);
+numTilesDev(8, 4, 2);
+numTilesDev(4, 8, 2);
 // numTilesDev(13, 11, 32);
 numTilesDev(15, 5, 24);
 // numTilesDev(16, 16, 1);
